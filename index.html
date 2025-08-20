@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>호주 어학연수 플랫폼 | 기획 발표 대시보드</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Professional Blue & Neutral Grays -->
+    <!-- Application Structure Plan: This is a new presentation-focused dashboard designed as a strategic narrative. The flow is optimized for storytelling: 1. Hero section with a clear mission statement. 2. The Opportunity (combining the core problem and market gap analysis). 3. Our Solution (presenting the value proposition with the CRICOS database and Hub & Spoke model). 4. The Roadmap (visualizing the MVP and future features with the Impact-Effort matrix). 5. The Path Forward (outlining the phased technology strategy). This structure is more persuasive and easier to follow in a presentation context than a simple report summary. -->
+    <!-- Visualization & Content Choices: 1. Market Gap: Report Info -> Agencies vs. Communities. Goal -> Compare. Viz -> Horizontal Bar Chart. Justification -> Instantly shows the strategic opening in the market. Library -> Chart.js. 2. Feature Roadmap: Report Info -> Impact-Effort Matrix data. Goal -> Analyze priorities. Viz -> Bubble Chart with Quadrants. Justification -> Clearly communicates the development strategy and MVP focus. Library -> Chart.js with Datalabels. 3. Tech Strategy: Report Info -> Tech stack pros/cons. Goal -> Compare options. Viz -> Radar Chart. Justification -> Effectively compares multiple dimensions of the strategic choice. Library -> Chart.js. All text is rewritten to be more concise and impactful for presentation. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+        }
+        .bubble-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            height: 550px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 450px; }
+            .bubble-chart-container { height: 600px; }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-bg': '#F0F4F8',
+                        'brand-surface': '#FFFFFF',
+                        'brand-text': '#102A43',
+                        'brand-subtext': '#627D98',
+                        'brand-primary': '#005B96',
+                        'brand-secondary': '#6497B1',
+                        'brand-accent': '#B3CDE0',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-brand-bg text-brand-text antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-brand-primary">Project AUS: 기획 발표</h1>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold">
+                <a href="#opportunity" class="text-brand-subtext hover:text-brand-primary transition-colors">시장 기회</a>
+                <a href="#solution" class="text-brand-subtext hover:text-brand-primary transition-colors">솔루션</a>
+                <a href="#roadmap" class="text-brand-subtext hover:text-brand-primary transition-colors">로드맵</a>
+                <a href="#strategy" class="text-brand-subtext hover:text-brand-primary transition-colors">기술 전략</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="py-24 md:py-32 bg-gradient-to-br from-brand-primary to-brand-secondary text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-6xl font-bold leading-tight">신뢰할 수 있는 정보로<br>성공적인 유학 여정을 만듭니다.</h2>
+                <p class="mt-6 max-w-3xl mx-auto text-lg text-brand-accent">
+                    Project AUS는 파편화되고 상업화된 정보 시장의 문제를 해결하고, 데이터 기반의 객관적인 정보 허브를 통해 예비 유학생들이 확신을 가지고 미래를 설계할 수 있도록 돕는 플랫폼입니다.
+                </p>
+            </div>
+        </section>
+
+        <section id="opportunity" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-text">The Opportunity: 신뢰의 공백</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-brand-subtext">
+                        현재 호주 유학 정보 시장은 '상업적 유학원'과 '비전문적 커뮤니티'로 양극화되어 있습니다. 이로 인해 예비 유학생들은 객관적인 의사결정이 어려운 '신뢰의 위기'를 겪고 있으며, 바로 이 지점에 우리의 핵심적인 시장 기회가 존재합니다.
+                    </p>
+                </div>
+                <div class="bg-brand-surface p-6 md:p-8 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold text-brand-text text-center mb-6">경쟁 환경 분석: 시장의 양극단</h3>
+                    <div class="chart-container">
+                        <canvas id="landscapeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-20 md:py-24 bg-brand-surface">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-text">Our Solution: 체계화된 진정성</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-brand-subtext">
+                        우리는 시장의 공백을 채우기 위해 '객관적 데이터'를 신뢰의 기반으로 삼습니다. 정부의 CRICOS 데이터를 중심으로 콘텐츠와 커뮤니티를 유기적으로 결합하여, 사용자에게 독보적인 가치를 제공합니다.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-brand-primary mb-4">신뢰의 원천: CRICOS DB</h3>
+                        <p class="text-brand-subtext">
+                            호주 정부가 직접 운영하는 CRICOS DB는 유학생을 위한 모든 교육 기관과 과정의 가장 정확하고 포괄적인 '진실의 원천'입니다. 우리는 이 공공 데이터를 누구나 쉽게 검색하고 비교할 수 있는 직관적인 인터페이스로 제공하여, 정보의 투명성과 객관성을 확보합니다.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-brand-primary mb-4">'Hub & Spoke' 콘텐츠 모델</h3>
+                         <div class="flex items-center justify-center space-x-4">
+                            <div class="text-center">
+                                <div class="bg-brand-accent/50 p-3 rounded-lg">Spoke</div>
+                                <div class="text-xs mt-1 text-brand-subtext">경험/가이드</div>
+                            </div>
+                            <div class="text-2xl text-brand-secondary">↔</div>
+                            <div class="text-center">
+                                <div class="bg-brand-primary text-white p-5 rounded-full shadow-md">Hub</div>
+                                <div class="text-xs mt-1 text-brand-subtext">데이터/팩트</div>
+                            </div>
+                            <div class="text-2xl text-brand-secondary">↔</div>
+                             <div class="text-center">
+                                <div class="bg-brand-accent/50 p-3 rounded-lg">Spoke</div>
+                                <div class="text-xs mt-1 text-brand-subtext">커뮤니티</div>
+                            </div>
+                        </div>
+                        <p class="text-brand-subtext mt-4">
+                            데이터(Hub)를 중심으로 블로그, 후기, 가이드(Spoke)가 유기적으로 연결되어, 정보의 깊이와 사용성을 동시에 만족시키는 콘텐츠 생태계를 구축합니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-text">The Roadmap: 가치 중심의 개발</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-brand-subtext">
+                        제한된 자원으로 최대의 효과를 내기 위해 기능의 우선순위를 전략적으로 결정했습니다. Impact-Effort Matrix를 통해 MVP(최소 기능 제품)와 향후 로드맵을 명확히 정의합니다.
+                    </p>
+                </div>
+                <div class="bg-brand-surface p-6 md:p-8 rounded-xl shadow-lg">
+                    <div class="bubble-chart-container">
+                        <canvas id="featuresChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="strategy" class="py-20 md:py-24 bg-brand-surface">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-text">The Path Forward: 현명한 기술 전략</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-brand-subtext">
+                        학생 개발자의 상황을 고려하여, 리스크를 최소화하고 성공 가능성을 극대화하는 단계적, 혼합적 기술 접근법을 제안합니다.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-brand-text text-center mb-6">기술 스택 비교 분석</h3>
+                        <div class="chart-container">
+                            <canvas id="techStackChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-brand-primary text-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-4">최종 권장 경로</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold">1단계 (검증): No-Code MVP</h4>
+                                <p class="text-sm text-brand-accent">가장 빠른 방법으로 핵심 가설을 검증하고 초기 시장 반응을 확인합니다.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">2단계 (확장): 데이터 기반 의사결정</h4>
+                                <p class="text-sm text-brand-accent">MVP 성공 시, 확보된 데이터를 바탕으로 V2 개발의 타당성을 확보합니다.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">3단계 (구축): Traditional Stack</h4>
+                                <p class="text-sm text-brand-accent">검증된 아이디어를 바탕으로, 확장성과 유연성을 갖춘 견고한 V2를 구축합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brand-text text-white">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p class="text-lg font-semibold">Project AUS</p>
+            <p class="mt-2 text-sm text-brand-subtext">신뢰할 수 있는 정보로 당신의 성공적인 유학 여정을 응원합니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Chart.js 플러그인 등록
+            if (typeof ChartDataLabels !== 'undefined') {
+                Chart.register(ChartDataLabels);
+            }
+
+            // 경쟁 환경 분석 차트
+            const landscapeCtx = document.getElementById('landscapeChart').getContext('2d');
+            new Chart(landscapeCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['콘텐츠 객관성', '정보 체계성', '사용자 신뢰도', '실용적 정보'],
+                    datasets: [{
+                        label: '유학원 (상업적/체계적)', 
+                        data: [1, 5, 2, 3],
+                        backgroundColor: '#6497B1',
+                        borderRadius: 4
+                    }, {
+                        label: '커뮤니티 (진솔/무질서)', 
+                        data: [4, 1, 4, 5],
+                        backgroundColor: '#B3CDE0',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: { 
+                        x: { 
+                            beginAtZero: true, 
+                            max: 5, 
+                            grid: { color: '#E0E6F0' },
+                            title: { display: true, text: '점수 (1-5)' }
+                        }, 
+                        y: { 
+                            grid: { display: false } 
+                        } 
+                    },
+                    plugins: { 
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    }
+                }
+            });
+
+            // 기능 로드맵 버블 차트
+            const featuresCtx = document.getElementById('featuresChart').getContext('2d');
+            const featuresData = [
+                { name: 'CRICOS 검색/필터링', effort: 4, impact: 5, phase: 'Core-MVP' },
+                { name: '인터랙티브 비자 체크리스트', effort: 3, impact: 5, phase: 'Core-MVP' },
+                { name: '도시별 생활비 가이드', effort: 2, impact: 4, phase: 'Core-MVP' },
+                { name: '사용자 계정 시스템', effort: 2, impact: 3, phase: 'Core-MVP' },
+                { name: '검증된 후기 시스템', effort: 5, impact: 5, phase: 'High Priority' },
+                { name: '구조화된 Q&A 포럼', effort: 4, impact: 4, phase: 'High Priority' },
+                { name: '커뮤니티 허브', effort: 5, impact: 4, phase: 'Future Enhancement' },
+                { name: '학생 맞춤형 일자리 게시판', effort: 3, impact: 3, phase: 'Future Enhancement' }
+            ];
+            const phaseColors = { 
+                'Core-MVP': '#005B96', 
+                'High Priority': '#6497B1', 
+                'Future Enhancement': '#B3CDE0' 
+            };
+            
+            const bubbleChart = new Chart(featuresCtx, {
+                type: 'bubble',
+                data: {
+                    datasets: [{
+                        label: '기능',
+                        data: featuresData.map(f => ({ 
+                            x: f.effort, 
+                            y: f.impact, 
+                            r: (f.impact + f.effort) * 1.8, 
+                            feature: f,
+                            backgroundColor: phaseColors[f.phase]
+                        }))
+                    }]
+                },
+                options: {
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { 
+                            callbacks: { 
+                                label: function(context) {
+                                    const feature = context.raw.feature;
+                                    return [
+                                        feature.name + ' (' + feature.phase + ')',
+                                        '영향도: ' + context.raw.y + '/5',
+                                        '노력도: ' + context.raw.x + '/5'
+                                    ];
+                                }
+                            } 
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            min: 0.5, 
+                            max: 5.5, 
+                            title: { 
+                                display: true, 
+                                text: 'Effort (개발 노력) →', 
+                                font: { size: 14, weight: '600' }, 
+                                color: '#627D98' 
+                            }, 
+                            grid: { color: '#E0E6F0' } 
+                        },
+                        y: { 
+                            min: 0.5, 
+                            max: 5.5, 
+                            title: { 
+                                display: true, 
+                                text: 'Impact (사용자 가치) →', 
+                                font: { size: 14, weight: '600' }, 
+                                color: '#627D98' 
+                            }, 
+                            grid: { color: '#E0E6F0' } 
+                        }
+                    }
+                },
+                plugins: [{
+                    id: 'quadrants',
+                    beforeDraw: function(chart) {
+                        const { ctx, chartArea: { left, top, right, bottom }, scales: { x, y } } = chart;
+                        const midX = x.getPixelForValue(3); 
+                        const midY = y.getPixelForValue(3);
+                        
+                        ctx.save();
+                        ctx.strokeStyle = '#BCCCDC'; 
+                        ctx.lineWidth = 1; 
+                        ctx.setLineDash([6, 6]);
+                        ctx.beginPath(); 
+                        ctx.moveTo(midX, top); 
+                        ctx.lineTo(midX, bottom); 
+                        ctx.moveTo(left, midY); 
+                        ctx.lineTo(right, midY); 
+                        ctx.stroke();
+                        
+                        ctx.fillStyle = '#9FB3C8'; 
+                        ctx.font = '600 12px "Inter"';
+                        ctx.textAlign = 'right'; 
+                        ctx.textBaseline = 'top'; 
+                        ctx.fillText('Quick Wins', midX - 10, top + 10);
+                        ctx.textAlign = 'left'; 
+                        ctx.fillText('Major Projects', midX + 10, top + 10);
+                        ctx.textAlign = 'right'; 
+                        ctx.textBaseline = 'bottom'; 
+                        ctx.fillText('Fill-ins', midX - 10, bottom - 10);
+                        ctx.textAlign = 'left'; 
+                        ctx.fillText('Reconsider', midX + 10, bottom - 10);
+                        ctx.restore();
+                    }
+                }]
+            });
+
+            // 기술 스택 레이더 차트
+            const techStackCtx = document.getElementById('techStackChart').getContext('2d');
+            new Chart(techStackCtx, {
+                type: 'radar',
+                data: {
+                    labels: ['개발 속도', '확장성', '커스터마이징', '초기 비용', '학습 곡선'],
+                    datasets: [
+                        { 
+                            label: 'Traditional Stack', 
+                            data: [1, 5, 5, 4, 1], 
+                            fill: true, 
+                            backgroundColor: 'rgba(0, 91, 150, 0.2)', 
+                            borderColor: 'rgb(0, 91, 150)',
+                            pointBackgroundColor: 'rgb(0, 91, 150)',
+                            pointBorderColor: 'rgb(0, 91, 150)',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(0, 91, 150)'
+                        },
+                        { 
+                            label: 'CMS (WordPress)', 
+                            data: [4, 3, 3, 3, 4], 
+                            fill: true, 
+                            backgroundColor: 'rgba(100, 151, 177, 0.2)', 
+                            borderColor: 'rgb(100, 151, 177)',
+                            pointBackgroundColor: 'rgb(100, 151, 177)',
+                            pointBorderColor: 'rgb(100, 151, 177)',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(100, 151, 177)'
+                        },
+                        { 
+                            label: 'No-Code (Bubble)', 
+                            data: [5, 2, 4, 2, 3], 
+                            fill: true, 
+                            backgroundColor: 'rgba(179, 205, 224, 0.2)', 
+                            borderColor: 'rgb(179, 205, 224)',
+                            pointBackgroundColor: 'rgb(179, 205, 224)',
+                            pointBorderColor: 'rgb(179, 205, 224)',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgb(179, 205, 224)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: { 
+                        r: { 
+                            beginAtZero: true, 
+                            max: 5, 
+                            grid: { color: '#E0E6F0' }, 
+                            pointLabels: { 
+                                font: { size: 12 } 
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        } 
+                    },
+                    plugins: { 
+                        legend: { 
+                            position: 'bottom',
+                            labels: {
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
